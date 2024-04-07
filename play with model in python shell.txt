@@ -1,0 +1,52 @@
+$ python manage.py shell
+Python 3.11.2 (tags/v3.11.2:878ead1, Feb  7 2023, 16:38:35) [MSC v.1934 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from blog.models import Post
+>>> from django.contrib.auth.models import User
+>>> Post.objects.all()
+<QuerySet [<Post: 1st Blog>]>
+>>> user = User.objects.filter(username='admin').first()
+>>> user.id
+1
+>>> user.pk
+1
+>>> post2 = Post(title='Blog 2',content='Second Post',author=user)
+>>> post2.save()
+>>> Post.objects.all()
+<QuerySet [<Post: 1st Blog>, <Post: Blog 2>]>
+>>> post = Post.object.first()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: type object 'Post' has no attribute 'object'
+>>> post = Post.objects.first()
+>>> post
+<Post: 1st Blog>
+>>> post.content
+'Welcome'
+>>> post.date_posted
+datetime.datetime(2023, 3, 29, 13, 46, 58, 627323, tzinfo=datetime.timezone.utc)
+>>> post.author
+<User: admin>
+>>> post.author.email
+'thisishaque3@gmail.com'
+>>> post.author.username
+'admin'
+>>> user
+<User: admin>
+
+
+
+#### importent .set
+
+
+
+>>> user.post_set
+<django.db.models.fields.related_descriptors.create_reverse_many_to_one_manager.<locals>.RelatedManager object at 0x000001F0AD3E4FD0>
+>>> user.post_set.all()
+<QuerySet [<Post: 1st Blog>, <Post: Blog 2>]>
+>>> user.post_set.create(title='Blog 3',content='post using post_set')
+<Post: Blog 3>
+>>> Post.objects.all()
+<QuerySet [<Post: 1st Blog>, <Post: Blog 2>, <Post: Blog 3>]>
+>>>
